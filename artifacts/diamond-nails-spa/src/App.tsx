@@ -1,4 +1,4 @@
-import { useState, type FormEvent, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   ArrowDown, ArrowUpRight, CalendarDays, Check, ChevronDown, Clock3, Diamond,
@@ -275,6 +275,12 @@ function ChatAssistant() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState<Message[]>([{ from: 'assistant', text: 'Hello, I’m Diamond’s little assistant. Ask me about our hours, location, services or walk-ins.' }]);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
+
   const send = (event?: FormEvent) => {
     event?.preventDefault();
     const value = input.trim();
@@ -291,7 +297,7 @@ function ChatAssistant() {
   return (
     <div className="fixed bottom-5 right-5 z-50" data-testid="chat-assistant">
       <AnimatePresence>
-        {open && <motion.div initial={{ opacity: 0, y: 14, scale: .97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 14, scale: .97 }} className="mb-3 flex w-[min(360px,calc(100vw-2rem))] flex-col overflow-hidden rounded-2xl border border-[#D9A9A0] bg-[#FBF6F2] shadow-soft" data-testid="chat-panel"><div className="flex items-center justify-between bg-[#3B2F2C] px-5 py-4 text-[#FBF6F2]"><div><p className="font-display text-xl">A little help?</p><p className="text-[.65rem] text-[#FBF6F2]/60">Diamond assistant</p></div><button type="button" onClick={() => setOpen(false)} aria-label="Close chat" className="rounded-full p-1 hover:bg-white/10" data-testid="button-close-chat"><X size={17} /></button></div><div className="chat-scroll flex max-h-72 flex-col gap-3 overflow-y-auto p-4">{messages.map((message, index) => <div key={`${message.from}-${index}`} className={`max-w-[87%] rounded-2xl px-3.5 py-2.5 text-xs leading-[1.55] ${message.from === 'user' ? 'self-end rounded-br-sm bg-[#D9A9A0]/45 text-[#3B2F2C]' : 'self-start rounded-bl-sm bg-[#F1D9D3]/45 text-[#3B2F2C]/75'}`} data-testid={`chat-message-${index}`}>{message.text}</div>)}</div><form onSubmit={send} className="flex gap-2 border-t border-[#D9A9A0]/55 p-3"><input value={input} onChange={(event) => setInput(event.target.value)} placeholder="Ask a question..." aria-label="Chat message" className="min-w-0 flex-1 rounded-xl border border-[#D9A9A0] bg-transparent px-3 py-2.5 text-xs outline-none focus:ring-2 focus:ring-[#B8946A]/35" data-testid="input-chat-message" /><button type="submit" aria-label="Send chat message" className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#3B2F2C] text-[#FBF6F2]" data-testid="button-send-chat"><Send size={15} /></button></form></motion.div>}
+        {open && <motion.div initial={{ opacity: 0, y: 14, scale: .97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 14, scale: .97 }} className="mb-3 flex w-[min(360px,calc(100vw-2rem))] flex-col overflow-hidden rounded-2xl border border-[#D9A9A0] bg-[#FBF6F2] shadow-soft" data-testid="chat-panel"><div className="flex items-center justify-between bg-[#3B2F2C] px-5 py-4 text-[#FBF6F2]"><div><p className="font-display text-xl">A little help?</p><p className="text-[.65rem] text-[#FBF6F2]/60">Diamond assistant</p></div><button type="button" onClick={() => setOpen(false)} aria-label="Close chat" className="rounded-full p-1 hover:bg-white/10" data-testid="button-close-chat"><X size={17} /></button></div><div className="chat-scroll flex max-h-72 flex-col gap-3 overflow-y-auto p-4">{messages.map((message, index) => <div key={`${message.from}-${index}`} className={`max-w-[87%] rounded-2xl px-3.5 py-2.5 text-xs leading-[1.55] ${message.from === 'user' ? 'self-end rounded-br-sm bg-[#D9A9A0]/45 text-[#3B2F2C]' : 'self-start rounded-bl-sm bg-[#F1D9D3]/45 text-[#3B2F2C]/75'}`} data-testid={`chat-message-${index}`}>{message.text}</div>)}<div ref={messagesEndRef} aria-hidden="true" /></div><form onSubmit={send} className="flex gap-2 border-t border-[#D9A9A0]/55 p-3"><input value={input} onChange={(event) => setInput(event.target.value)} placeholder="Ask a question..." aria-label="Chat message" className="min-w-0 flex-1 rounded-xl border border-[#D9A9A0] bg-transparent px-3 py-2.5 text-xs outline-none focus:ring-2 focus:ring-[#B8946A]/35" data-testid="input-chat-message" /><button type="submit" aria-label="Send chat message" className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#3B2F2C] text-[#FBF6F2]" data-testid="button-send-chat"><Send size={15} /></button></form></motion.div>}
       </AnimatePresence>
       <button type="button" onClick={() => setOpen(!open)} className="flex items-center gap-2 rounded-full bg-[#3B2F2C] px-4 py-3.5 text-[#FBF6F2] shadow-soft transition-transform hover:-translate-y-1" aria-expanded={open} data-testid="button-toggle-chat"><MessageCircle size={18} color={gold} /><span className="text-[.68rem] uppercase tracking-[.12em]">Chat with us</span></button>
     </div>
