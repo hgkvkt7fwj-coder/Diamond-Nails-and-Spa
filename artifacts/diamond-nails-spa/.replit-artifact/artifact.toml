@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Diamond Nails & Spa"
+description = "A premium mobile-first single-page website for Diamond Nails & Spa in Caerphilly, showcasing nail services, gallery work, reviews, booking, FAQs, and contact details."
+version = "1.0.0"
+id = "artifacts/diamond-nails-spa"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 22256
+
+[services.development]
+run = "pnpm --filter @workspace/diamond-nails-spa run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/diamond-nails-spa", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/diamond-nails-spa/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "22256"
+BASE_PATH = "/"

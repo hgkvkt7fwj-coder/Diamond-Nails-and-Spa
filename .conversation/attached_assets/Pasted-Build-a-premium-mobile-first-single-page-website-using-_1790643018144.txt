@@ -1,0 +1,35 @@
+Build a premium, mobile-first, single-page website using React, Vite, and Tailwind CSS for "Diamond Nails & Spa", a nail salon located in Caerphilly. Tagline: "Experience meets style — we create nails you'll love". The feel should be elegant, calm, and highly attractive to users: airy whitespace, soft shadows, and subtle fade-in animations. The layout must never feel cluttered.
+
+DESIGN & ASSETS
+- Palette: cream #FBF6F2, blush #F1D9D3, dusty rose #D9A9A0, deep mocha #3B2F2C for text, soft gold #B8946A for small accents.
+- Fonts: Import and use 'Cormorant Garamond' for headings, 'Jost' for body text.
+- Styling & Polish: Rounded buttons, generous spacing, large readable text on mobile. Elevate the visual appeal with premium UI touches: add a subtle glassmorphism (blur) effect on the sticky header, soft refined drop shadows on cards, and gentle, satisfying hover states on all interactive elements. Use Lucide React icons where appropriate.
+- Images: Integrate high-quality, royalty-free stock images from Unsplash of elegant nail art, clean manicures, and aesthetic spa environments to serve as stunning visual placeholders.
+
+NAVIGATION
+- Sticky top bar: logo text "Diamond Nails & Spa", links (Services, Gallery, About, Reviews, FAQ, Contact), and a "Book now" button.
+- On mobile: hamburger menu, plus a floating "Book now" button pinned to the bottom of the screen.
+
+SECTIONS (in order)
+1. Hero: full-width soft aesthetic background image, headline "Experience meets style", one line: "Acrylic, BIAB, Gel Nails, and Luxury Pedicures in Caerphilly." Two buttons: "Book now" (smooth scrolls to booking) and "View services".
+2. Trust strip: 4 small icon items highlighting salon perks: "Walk-ins Always Welcome", "Complimentary Snacks & Drinks", "Custom Nail Art", "Easy Online Booking".
+3. Services: a clean menu grouped as Acrylic, BIAB, Gel Nails, Manicures & Pedicures, and Nail Design. Each has a name, a one-line description, and price. Use placeholders "£-- [TO CONFIRM]" for prices. Each has a "Book" link.
+4. Gallery: responsive masonry or grid layout of 9 high-quality Unsplash image tiles (showing nails/spa) with rounded corners, and a "Follow us on Instagram @diamondnails.50caerphilly" button below.
+5. About: short warm paragraph placeholder about the studio and the technicians, alongside a friendly aesthetic spa image.
+6. Reviews: 3 aesthetic review cards with generic positive placeholder text (e.g., "Absolutely love my nails, highly recommend!").
+7. Booking: a full-width section titled "Book your appointment" with a stylized, large placeholder container stating "[Booking Widget Goes Here]". No custom booking logic or payments needed.
+8. FAQ: interactive accordion with 6 questions: How long do sets last? Do you take walk-ins? (Answer: Yes, walk-ins are always welcome, though booking is available!) What should I do before my appointment? Can I bring a design reference? What is your cancellation policy? How do I look after my nails? Use "[TO CONFIRM]" for the unknown answers.
+9. Contact: address "50 Cardiff Road, Caerphilly CF83 1JQ", phone "07496 973566" as a tap-to-call link, opening hours showing "Monday - Saturday: 9:00 AM - 6:00 PM, Sunday: Booking only". Include a placeholder for a Google Map embed.
+10. Footer: logo, quick links, Instagram link, "Privacy policy" link placeholder, and "© Diamond Nails & Spa".
+
+CHAT ASSISTANT
+- Create a functional, interactive chat UI widget at the bottom right. 
+- It MUST include a chat window with a text input field and a "Send" button so the user can type questions.
+- Implement basic simulated logic (using React state): it should scan the user's input for keywords related to the site's content (e.g., "hours", "location", "services", "walk-ins") and reply with the corresponding information from the website.
+- Fallback logic: If the bot does not recognize the question or it falls outside the website's provided info, it MUST reply exactly with: "I'm not sure, please call 07496 973566 or send us a message on Instagram @diamondnails.50caerphilly."
+
+TECH AND QUALITY (STRICT PERFORMANCE)
+- Highly Optimized & Lag-Free: Write clean, lightweight code. Ensure the app is incredibly responsive, instantly interactive, and entirely free of lag or delayed inputs.
+- Butter-Smooth Animations: Use Framer Motion for subtle, staggered fade-ins as the user scrolls. Ensure all animations are lightweight and perform at a flawless 60fps without stuttering or causing any performance drops.
+- Fully responsive, prioritizing the mobile experience.
+- Ensure perfectly smooth, calculated anchor scrolling for all navigation links.
