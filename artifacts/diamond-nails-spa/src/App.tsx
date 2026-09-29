@@ -57,11 +57,11 @@ type Message = { from: 'assistant' | 'user'; text: string };
 function Reveal({ children, delay = 0, className = '' }: { children: ReactNode; delay?: number; className?: string }) {
   return (
     <motion.div
-      className={className}
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.14 }}
-      transition={{ duration: 0.72, delay, ease: [0.22, 1, 0.36, 1] }}
+      className={`${className} transform-gpu will-change-transform`}
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true, margin: '50px' }}
+      transition={{ duration: 0.48, delay, ease: 'easeOut' }}
     >
       {children}
     </motion.div>
@@ -118,8 +118,8 @@ function Hero() {
           </div>
         </Reveal>
         <Reveal delay={0.16} className="relative mx-auto w-full max-w-[590px]">
-          <div className="relative ml-auto aspect-[.84] w-[82%] overflow-hidden rounded-t-[14rem] rounded-b-[.8rem] shadow-soft sm:w-[73%]">
-            <img src={images.hero} alt="Elegant neutral manicure with delicate gold detail" className="image-fade h-full w-full object-cover" data-testid="img-hero-nails" />
+          <div className="relative ml-auto aspect-[.84] w-[82%] overflow-hidden rounded-t-[14rem] rounded-b-[.8rem] sm:w-[73%]">
+            <img src={images.hero} alt="Elegant neutral manicure with delicate gold detail" loading="lazy" className="image-fade h-full w-full object-cover" data-testid="img-hero-nails" />
           </div>
           <div className="absolute bottom-[7%] left-0 flex h-[160px] w-[160px] -rotate-6 flex-col justify-between rounded-full bg-[#F1D9D3] p-7 shadow-card sm:h-[185px] sm:w-[185px]" data-testid="card-hero-note">
             <DiamondMark size={25} />
@@ -160,8 +160,8 @@ function Services() {
           {services.map((service, index) => (
             <Reveal key={service.title} delay={index * .06} className={index === 0 ? 'md:col-span-7' : index === 1 ? 'md:col-span-5' : index === 2 ? 'md:col-span-5' : index === 3 ? 'md:col-span-4' : 'md:col-span-3'}>
               <article className="group relative min-h-[280px] overflow-hidden rounded-[1.2rem] bg-[#F1D9D3]" data-testid={`card-service-${service.number}`}>
-                <img src={service.image} alt={`${service.title} nail service`} className="image-fade absolute inset-0 h-full w-full object-cover opacity-65 mix-blend-multiply" data-testid={`img-service-${service.number}`} />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#3B2F2C]/80 via-[#3B2F2C]/10 to-transparent" />
+                <img src={service.image} alt={`${service.title} nail service`} loading="lazy" className="image-fade absolute inset-0 h-full w-full object-cover opacity-65 mix-blend-multiply" data-testid={`img-service-${service.number}`} />
+               <div className="absolute inset-0 bg-[#3B2F2C]/35" />
                 <div className="relative flex min-h-[280px] flex-col justify-between p-6 text-[#FBF6F2]"><div className="flex justify-between text-[.65rem] tracking-[.16em]"><span>{service.number}</span><span>{service.price}</span></div><div><h3 className="font-display text-[2.25rem] leading-none">{service.title}</h3><p className="mt-2 max-w-[280px] text-[.78rem] leading-[1.5] text-[#FBF6F2]/75">{service.description}</p></div></div>
               </article>
             </Reveal>
@@ -190,7 +190,7 @@ function Gallery() {
       <div className="section-shell">
         <Reveal className="mb-12 flex items-end justify-between gap-5"><div><p className="eyebrow mb-5 text-[#D9A9A0]">A glimpse inside</p><h2 className="font-display text-[3.8rem] leading-[.86] md:text-[5rem]">Your nails,<br /><em className="font-normal text-[#D9A9A0]">our canvas.</em></h2></div><p className="hidden max-w-[190px] text-right text-[.76rem] leading-[1.7] text-[#FBF6F2]/55 sm:block">A collection of recent sets and quiet studio moments.</p></Reveal>
         <div className="grid auto-rows-[125px] grid-cols-2 gap-3 sm:auto-rows-[150px] sm:grid-cols-4 md:auto-rows-[185px]" data-testid="gallery-grid">
-          {tiles.map(([src, alt, size], index) => <Reveal delay={index * .04} className={`${size} overflow-hidden rounded-xl`} key={`${alt}-${index}`}><div className="h-full overflow-hidden"><img src={src} alt={alt} className="image-fade h-full w-full object-cover" data-testid={`img-gallery-${index + 1}`} /></div></Reveal>)}
+          {tiles.map(([src, alt, size], index) => <Reveal delay={index * .04} className={`${size} overflow-hidden rounded-xl`} key={`${alt}-${index}`}><div className="h-full overflow-hidden"><img src={src} alt={alt} loading="lazy" className="image-fade h-full w-full object-cover" data-testid={`img-gallery-${index + 1}`} /></div></Reveal>)}
         </div>
         <div className="mt-10 flex items-center justify-between border-t border-[#FBF6F2]/15 pt-5"><span className="text-[.65rem] uppercase tracking-[.18em] text-[#FBF6F2]/50">Follow along</span><a href="https://www.instagram.com/diamondnails.50caerphilly/" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm text-[#D9A9A0] hover:text-[#FBF6F2]" data-testid="link-instagram"><Instagram size={16} /> @diamondnails.50caerphilly <ArrowUpRight size={14} /></a></div>
       </div>
@@ -203,7 +203,7 @@ function About() {
     <section id="about" className="overflow-hidden bg-[#F1D9D3]/45 py-24 md:py-36" data-testid="section-about">
       <div className="section-shell grid items-center gap-14 md:grid-cols-[.95fr_1.05fr]">
         <Reveal className="relative">
-          <div className="relative mx-auto max-w-[420px] overflow-hidden rounded-[12rem] rounded-b-2xl"><img src={images.interior} alt="Warm, airy Diamond Nails studio interior" className="image-fade aspect-[.78] w-full object-cover" data-testid="img-about-studio" /></div>
+          <div className="relative mx-auto max-w-[420px] overflow-hidden rounded-[12rem] rounded-b-2xl"><img src={images.interior} alt="Warm, airy Diamond Nails studio interior" loading="lazy" className="image-fade aspect-[.78] w-full object-cover" data-testid="img-about-studio" /></div>
           <div className="absolute -bottom-5 right-0 flex h-28 w-28 rotate-6 items-center justify-center rounded-full bg-[#B8946A] p-5 text-center text-[.65rem] uppercase leading-[1.4] tracking-[.1em] text-[#FBF6F2] shadow-card">Good nails<br />good mood</div>
         </Reveal>
         <Reveal delay={.12}>
@@ -239,7 +239,7 @@ function Booking() {
     <section id="booking" className="bg-[#D9A9A0] py-20 md:py-28" data-testid="section-booking">
       <div className="section-shell grid gap-12 md:grid-cols-[.9fr_1.1fr] md:items-center">
         <Reveal><p className="eyebrow mb-5 text-[#3B2F2C]/65">Your time, reserved</p><h2 className="font-display text-[4.1rem] leading-[.84] text-[#3B2F2C] md:text-[5.7rem]">Make a little<br /><em className="font-normal text-[#FBF6F2]">space for you.</em></h2><p className="mt-7 max-w-[360px] text-sm leading-[1.7] text-[#3B2F2C]/70">Booking is currently by message. Share a few details and we will be in touch to find your perfect appointment.</p></Reveal>
-        <Reveal delay={.12}><form onSubmit={submit} className="rounded-2xl bg-[#FBF6F2]/80 p-6 shadow-soft backdrop-blur-sm md:p-8" data-testid="form-booking"><div className="mb-6 flex items-center justify-between"><div><p className="font-display text-2xl text-[#3B2F2C]">Request an appointment</p><p className="mt-1 text-xs text-[#3B2F2C]/55">No payment required.</p></div><CalendarDays size={23} color={gold} /></div><div className="grid gap-4 sm:grid-cols-2"><label className="text-xs text-[#3B2F2C]/70">Your name<input required name="name" type="text" placeholder="Your name" className="mt-2 w-full rounded-xl border border-[#D9A9A0] bg-transparent px-4 py-3.5 text-sm outline-none placeholder:text-[#3B2F2C]/35 focus:ring-2 focus:ring-[#B8946A]/35" data-testid="input-booking-name" /></label><label className="text-xs text-[#3B2F2C]/70">Phone number<input required name="phone" type="tel" placeholder="07..." className="mt-2 w-full rounded-xl border border-[#D9A9A0] bg-transparent px-4 py-3.5 text-sm outline-none placeholder:text-[#3B2F2C]/35 focus:ring-2 focus:ring-[#B8946A]/35" data-testid="input-booking-phone" /></label></div><label className="mt-4 block text-xs text-[#3B2F2C]/70">What would you love?<select name="service" className="mt-2 w-full rounded-xl border border-[#D9A9A0] bg-[#FBF6F2] px-4 py-3.5 text-sm outline-none focus:ring-2 focus:ring-[#B8946A]/35" data-testid="select-booking-service">{services.map((service) => <option key={service.title}>{service.title}</option>)}</select></label><button type="submit" className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-[#3B2F2C] py-4 text-[.7rem] font-medium uppercase tracking-[.15em] text-[#FBF6F2] transition-transform hover:-translate-y-0.5" data-testid="button-submit-booking">{sent ? <><Check size={15} /> Request received</> : <>Send request <ArrowUpRight size={15} /></>}</button>{sent && <p className="mt-3 text-center text-xs text-[#3B2F2C]/65" data-testid="status-booking-success">Thank you — we will be in touch shortly. This is a presentation form, so please also call 07496 973566.</p>}</form></Reveal>
+        <Reveal delay={.12}><form onSubmit={submit} className="rounded-2xl bg-[#FBF6F2]/80 p-6 md:p-8" data-testid="form-booking"><div className="mb-6 flex items-center justify-between"><div><p className="font-display text-2xl text-[#3B2F2C]">Request an appointment</p><p className="mt-1 text-xs text-[#3B2F2C]/55">No payment required.</p></div><CalendarDays size={23} color={gold} /></div><div className="grid gap-4 sm:grid-cols-2"><label className="text-xs text-[#3B2F2C]/70">Your name<input required name="name" type="text" placeholder="Your name" className="mt-2 w-full rounded-xl border border-[#D9A9A0] bg-transparent px-4 py-3.5 text-sm outline-none placeholder:text-[#3B2F2C]/35 focus:ring-2 focus:ring-[#B8946A]/35" data-testid="input-booking-name" /></label><label className="text-xs text-[#3B2F2C]/70">Phone number<input required name="phone" type="tel" placeholder="07..." className="mt-2 w-full rounded-xl border border-[#D9A9A0] bg-transparent px-4 py-3.5 text-sm outline-none placeholder:text-[#3B2F2C]/35 focus:ring-2 focus:ring-[#B8946A]/35" data-testid="input-booking-phone" /></label></div><label className="mt-4 block text-xs text-[#3B2F2C]/70">What would you love?<select name="service" className="mt-2 w-full rounded-xl border border-[#D9A9A0] bg-[#FBF6F2] px-4 py-3.5 text-sm outline-none focus:ring-2 focus:ring-[#B8946A]/35" data-testid="select-booking-service">{services.map((service) => <option key={service.title}>{service.title}</option>)}</select></label><button type="submit" className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-[#3B2F2C] py-4 text-[.7rem] font-medium uppercase tracking-[.15em] text-[#FBF6F2] transition-transform hover:-translate-y-0.5" data-testid="button-submit-booking">{sent ? <><Check size={15} /> Request received</> : <>Send request <ArrowUpRight size={15} /></>}</button>{sent && <p className="mt-3 text-center text-xs text-[#3B2F2C]/65" data-testid="status-booking-success">Thank you — we will be in touch shortly. This is a presentation form, so please also call 07496 973566.</p>}</form></Reveal>
       </div>
     </section>
   );
@@ -264,7 +264,7 @@ function Contact() {
         <Reveal className="mb-12"><p className="eyebrow mb-5">Come and see us</p><h2 className="font-display text-[4rem] leading-[.85] text-[#3B2F2C] md:text-[5.5rem]">Find your way<br /><em className="font-normal text-[#B8946A]">to Diamond.</em></h2></Reveal>
         <div className="grid gap-4 md:grid-cols-[1fr_1.25fr]">
           <Reveal><div className="grid gap-3 sm:grid-cols-2 md:grid-cols-1"><div className="rounded-2xl bg-[#FBF6F2] p-6" data-testid="contact-address"><MapPin size={19} color={gold} /><p className="mt-5 text-[.67rem] uppercase tracking-[.15em] text-[#3B2F2C]/50">Address</p><p className="mt-1 font-display text-2xl text-[#3B2F2C]">Caerphilly town centre<br /><span className="text-[#B8946A]">South Wales</span></p><a href="https://www.google.com/maps/search/Caerphilly+town+centre" target="_blank" rel="noreferrer" className="mt-4 inline-flex items-center gap-1 text-xs text-[#3B2F2C] underline decoration-[#B8946A]" data-testid="link-map">Open in maps <ArrowUpRight size={13} /></a></div><div className="rounded-2xl bg-[#3B2F2C] p-6 text-[#FBF6F2]" data-testid="contact-hours"><Clock3 size={19} color={gold} /><p className="mt-5 text-[.67rem] uppercase tracking-[.15em] text-[#FBF6F2]/50">Opening hours</p><div className="mt-2 space-y-1.5 text-sm"><p>Monday – Saturday <span className="float-right text-[#D9A9A0]">By appointment</span></p><p>Sunday <span className="float-right text-[#D9A9A0]">Closed</span></p></div><a href="tel:07496973566" className="mt-5 inline-flex items-center gap-2 text-sm text-[#D9A9A0]" data-testid="link-contact-phone"><Phone size={14} /> 07496 973566</a></div></div></Reveal>
-          <Reveal delay={.1}><div className="relative min-h-[360px] overflow-hidden rounded-2xl bg-[#D9A9A0]" data-testid="map-placeholder"><img src={images.table} alt="" className="absolute inset-0 h-full w-full object-cover opacity-25 mix-blend-multiply" /><div className="absolute inset-0 flex items-center justify-center"><div className="rounded-full bg-[#FBF6F2] px-5 py-4 text-center shadow-soft"><MapPin size={20} color={gold} className="mx-auto" /><p className="mt-2 font-display text-xl text-[#3B2F2C]">Diamond Nails & Spa</p><p className="text-[.68rem] uppercase tracking-[.13em] text-[#3B2F2C]/55">Caerphilly town centre</p></div></div><div className="absolute bottom-5 left-5 text-[.65rem] uppercase tracking-[.16em] text-[#3B2F2C]/60">Map preview · exact address to confirm</div></div></Reveal>
+        <Reveal delay={.1}><div className="relative min-h-[360px] overflow-hidden rounded-2xl bg-[#D9A9A0]" data-testid="map-placeholder"><img src={images.table} alt="" loading="lazy" className="absolute inset-0 h-full w-full object-cover opacity-25 mix-blend-multiply" /><div className="absolute inset-0 flex items-center justify-center"><div className="rounded-full bg-[#FBF6F2] px-5 py-4 text-center shadow-soft"><MapPin size={20} color={gold} className="mx-auto" /><p className="mt-2 font-display text-xl text-[#3B2F2C]">Diamond Nails & Spa</p><p className="text-[.68rem] uppercase tracking-[.13em] text-[#3B2F2C]/55">Caerphilly town centre</p></div></div><div className="absolute bottom-5 left-5 text-[.65rem] uppercase tracking-[.16em] text-[#3B2F2C]/60">Map preview · exact address to confirm</div></div></Reveal>
         </div>
       </div>
     </section>
